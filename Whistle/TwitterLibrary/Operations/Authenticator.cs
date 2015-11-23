@@ -17,12 +17,5 @@ namespace TwitterLibrary.Operations
         {
             Service.AuthenticateWith(token.Token, token.TokenSecret);
         }
-
-
-        public void Authenticate()
-        {
-            var token = Service.GetAccessToken(Service.GetRequestToken());
-            Service.AuthenticateWith(token.Token, token.TokenSecret);
-        }
     }
 }
