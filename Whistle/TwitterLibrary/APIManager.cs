@@ -26,12 +26,14 @@ namespace TwitterLibrary
         private TwitterService Service { get; set; }
         private Authorizer Authorizer { get; set; }
         private Authenticator Authenticator { get; set; }
+        private TimelineUpdater TimelineUpdater { get; set; }
 
         private APIManager()
         {
             Service = new TwitterService(CONSUMER_KEY, CONSUMER_SECRET);
             Authorizer = new Authorizer(Service);
             Authenticator = new Authenticator(Service);
+            TimelineUpdater = new TimelineUpdater(Service);
         }
 
         public Uri GetAuthorizationUri()
@@ -39,14 +41,15 @@ namespace TwitterLibrary
             return Authorizer.GetAuthorizationUri();
         }
 
-        public void Authenticate(string verifier)
+        public bool Authenticate(string verifier)
         {
             Authenticator.Authenticate(Authorizer.GetAccessToken(verifier));
+            return true;
         }
 
-        public void Authenticate()
+        public IEnumerable<TwitterStatus> GetTimelineTweets()
         {
-            Authenticator.Authenticate();
+            return TimelineUpdater.Update();
         }
     }
 }
