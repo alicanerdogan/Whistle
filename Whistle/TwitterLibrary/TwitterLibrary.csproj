@@ -56,6 +56,7 @@
     <Compile Include="APIOperation.cs" />
     <Compile Include="Operations\Authenticator.cs" />
     <Compile Include="Operations\Authorizer.cs" />
+    <Compile Include="Operations\TimelineUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
