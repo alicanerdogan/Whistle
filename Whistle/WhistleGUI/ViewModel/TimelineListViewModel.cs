@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TweetSharp;
 using TwitterLibrary;
 
 namespace WhistleGUI.ViewModel
@@ -13,35 +12,38 @@ namespace WhistleGUI.ViewModel
     public class TimelineListViewModel : ReactiveObject, IRoutableViewModel
     {
         #region Commands
-        public ReactiveCommand<IEnumerable<TwitterStatus>> Refresh { get; private set; }
+        public ReactiveCommand<IEnumerable<Tweet>> Refresh { get; private set; }
+        public ReactiveCommand<IEnumerable<Tweet>> GetOlderTweets { get; private set; }
         #endregion
 
         #region Properties
-        private TweetViewModel _TweetViewModel;
-        public TweetViewModel TweetViewModel
-        {
-            get { return _TweetViewModel; }
-            set { this.RaiseAndSetIfChanged(ref _TweetViewModel, value); }
-        }
-
-        public ReactiveList<TwitterStatus> TimelineTweets { get; private set; }
+        public ReactiveList<TweetViewModel> Tweets { get; private set; }
         #endregion
 
         public TimelineListViewModel(IScreen screen)
         {
             HostScreen = screen;
 
-            TimelineTweets = new ReactiveList<TwitterStatus>();
-            Refresh = ReactiveCommand.CreateAsyncTask<IEnumerable<TwitterStatus>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweets()));
+            Tweets = new ReactiveList<TweetViewModel>();
+            Refresh = ReactiveCommand.CreateAsyncTask<IEnumerable<Tweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweets()));
             Refresh.Subscribe(tweets =>
             {
-                TimelineTweets.AddRange(tweets);
-                if (tweets.Count() > 0)
+                foreach (var tweet in tweets)
                 {
-                    TweetViewModel = new TweetViewModel(TimelineTweets.First());
+                    Tweets.Add(new TweetViewModel(tweet));
                 }
             });
             Refresh.ThrownExceptions.Subscribe(e => MessageBox.Show(e.Message));
+
+            GetOlderTweets = ReactiveCommand.CreateAsyncTask<IEnumerable<Tweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweetsBefore(Tweets.Last().Tweet.Id)));
+            GetOlderTweets.Subscribe(tweets =>
+            {
+                foreach (var tweet in tweets)
+                {
+                    Tweets.Add(new TweetViewModel(tweet));
+                }
+            });
+            GetOlderTweets.ThrownExceptions.Subscribe(e => MessageBox.Show(e.Message));
         }
 
         #region IRoutableView Extension
