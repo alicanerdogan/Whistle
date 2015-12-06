@@ -54,10 +54,14 @@
   <ItemGroup>
     <Compile Include="APIManager.cs" />
     <Compile Include="APIOperation.cs" />
+    <Compile Include="DataStructures\IAppUser.cs" />
+    <Compile Include="Helper\RelativeTime.cs" />
     <Compile Include="Operations\Authenticator.cs" />
     <Compile Include="Operations\Authorizer.cs" />
     <Compile Include="Operations\TimelineUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tweet.cs" />
+    <Compile Include="TwitterUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
