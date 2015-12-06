@@ -32,6 +32,7 @@ namespace WhistleGUI.View
             this.Bind(ViewModel, vm => vm.ReplyCount, v => v.ReplyCount.Text);
             this.Bind(ViewModel, vm => vm.LikeCount, v => v.LikeCount.Text);
             this.Bind(ViewModel, vm => vm.RetweetCount, v => v.RetweetCount.Text);
+            this.OneWayBind(ViewModel, vm => vm.Avatar, v => v.Avatar.Source);
         }
 
 

@@ -4,35 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WhistleGUI.View"
+             xmlns:html="http://www.quickzip.org/BaseControls"
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="300" Background="White" MinHeight="90" MinWidth="300">
+             d:DesignHeight="90" d:DesignWidth="300" Background="White" MinHeight="50" MinWidth="300">
     <Grid>
         <Image x:Name="Avatar" HorizontalAlignment="Left" Width="50" Source="/WhistleGUI;component/Resources/user.jpg" Margin="5,5,0,0" Height="50" VerticalAlignment="Top"/>
         <TextBlock x:Name="Username" HorizontalAlignment="Left" Margin="60,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Light">
             ae - @aeality
         </TextBlock>
-        <TextBlock x:Name="TweetContent" Margin="60,21,5,0" TextWrapping="Wrap" FontSize="10.667" Height="59" VerticalAlignment="Top" >
-            Geçen hafta nișanlanan bir arkadaşım var. Nişanlısı buna nişan fotoğrafını öğle vakti paylaş, daha çok 'like' alırsın diye mesaj atıyor.
-        </TextBlock>
-        <Grid Margin="60,0,5,5" Height="15" VerticalAlignment="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <Image Source="/WhistleGUI;component/Resources/reply.png" Height="15" Width="15" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="ReplyCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Image Source="/WhistleGUI;component/Resources/retweet.png" Height="15" Width="15" HorizontalAlignment="Left" Grid.Column="1"/>
-                <TextBlock x:Name="RetweetCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Image Source="/WhistleGUI;component/Resources/faved.png" Height="15" Width="15" HorizontalAlignment="Left" Grid.Column="2"/>
-                <TextBlock x:Name="LikeCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
-            </StackPanel>
-        </Grid>
+        <StackPanel Margin="60,21,5,5">
+            <TextBlock  x:Name="TweetContent" Margin="0,0,0,5" TextWrapping="Wrap" FontSize="10.667" VerticalAlignment="Top"  />
+            <Grid Height="15" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/WhistleGUI;component/Resources/reply.png" Height="15" Width="15" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="ReplyCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Image Source="/WhistleGUI;component/Resources/retweet.png" Height="15" Width="15" HorizontalAlignment="Left" Grid.Column="1"/>
+                    <TextBlock x:Name="RetweetCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Image Source="/WhistleGUI;component/Resources/faved.png" Height="15" Width="15" HorizontalAlignment="Left" Grid.Column="2"/>
+                    <TextBlock x:Name="LikeCount" FontSize="8" Height="12" Foreground="DarkGray">1</TextBlock>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
         <TextBlock x:Name="TimeTag" HorizontalAlignment="Right" Margin="0,5,5,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Light" RenderTransformOrigin="0.855,0.575"><Run Text="2d"/></TextBlock>
 
     </Grid>
