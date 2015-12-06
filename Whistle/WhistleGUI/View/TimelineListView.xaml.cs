@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -26,7 +29,22 @@ namespace WhistleGUI.View
         {
             InitializeComponent();
 
-            this.Bind(ViewModel, vm => vm.TweetViewModel, v => v.Tweet.ViewModel);
+            var scrollViewerInsideListbox = Helper.VisualTreeTraverser.GetScrollViewerInsideListBox(Tweets);
+            var scrollToTheBottomEvents = Observable.FromEventPattern<ScrollChangedEventArgs>(scrollViewerInsideListbox, nameof(ScrollViewer.ScrollChanged)).Where(IsScrollBarAtTheBottom).Throttle(TimeSpan.FromSeconds(1));
+            scrollToTheBottomEvents.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ =>
+            {
+                this.ViewModel.GetOlderTweets.Execute(null);
+            });
+
+            this.OneWayBind(ViewModel, vm => vm.Tweets, v => v.Tweets.ItemsSource);
+        }
+
+        private static bool IsScrollBarAtTheBottom(System.Reactive.EventPattern<ScrollChangedEventArgs> args)
+        {
+            var scrollViewer = args.EventArgs.OriginalSource as ScrollViewer;
+            var scrollViewerBottomOffset = scrollViewer.ScrollableHeight;
+            var currentScrollViewerOffset = args.EventArgs.VerticalOffset;
+            return (scrollViewerBottomOffset > 0) && (scrollViewerBottomOffset == currentScrollViewerOffset);
         }
 
         #region IViewFor Extension

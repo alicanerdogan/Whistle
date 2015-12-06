@@ -10,8 +10,17 @@
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontFamily="Segoe UI Light" FontSize="26.667">
             timeline
         </TextBlock>
-        <StackPanel Margin="5,50,5,10">
-            <local:TweetView x:Name="Tweet"/>
-        </StackPanel>
+        <ListBox x:Name="Tweets" Margin="5,50,5,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:TweetView ViewModel="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>   
+        </ListBox>
     </Grid>
 </UserControl>
