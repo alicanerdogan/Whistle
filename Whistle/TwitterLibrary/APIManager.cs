@@ -47,9 +47,34 @@ namespace TwitterLibrary
             return true;
         }
 
-        public IEnumerable<TwitterStatus> GetTimelineTweets()
+        public IEnumerable<Tweet> GetTimelineTweets()
         {
-            return TimelineUpdater.Update();
+            var tweets = new List<Tweet>();
+            foreach (var twitterStatus in TimelineUpdater.Update())
+            {
+                tweets.Add(new Tweet(twitterStatus));
+            }
+            return tweets;
+        }
+
+        public IEnumerable<Tweet> GetTimelineTweetsBefore(long id)
+        {
+            var tweets = new List<Tweet>();
+            foreach (var twitterStatus in TimelineUpdater.UpdateBefore(id))
+            {
+                tweets.Add(new Tweet(twitterStatus));
+            }
+            return tweets;
+        }
+
+        public IEnumerable<Tweet> GetTimelineTweetsAfter(long id)
+        {
+            var tweets = new List<Tweet>();
+            foreach (var twitterStatus in TimelineUpdater.UpdateAfter(id))
+            {
+                tweets.Add(new Tweet(twitterStatus));
+            }
+            return tweets;
         }
     }
 }
