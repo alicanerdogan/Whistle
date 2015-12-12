@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +70,7 @@
       <HintPath>..\packages\Rx-XAML.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -86,10 +88,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\MarkupTweetConverter.cs" />
+    <Compile Include="CustomControl\RichTextBlock.cs" />
     <Compile Include="Helper\BitmapDownloader.cs" />
     <Compile Include="Helper\VisualTreeTraverser.cs" />
     <Compile Include="ViewModel\BrowserViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MultiMediaViewModel.cs" />
     <Compile Include="ViewModel\TimelineListViewModel.cs" />
     <Compile Include="ViewModel\TweetViewModel.cs" />
     <Compile Include="ViewModel\UserAuthorizationViewModel.cs" />
@@ -99,6 +104,9 @@
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MultiMediaView.xaml.cs">
+      <DependentUpon>MultiMediaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TimelineListView.xaml.cs">
       <DependentUpon>TimelineListView.xaml</DependentUpon>
@@ -126,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MultiMediaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +210,7 @@
       <Name>TwitterLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
