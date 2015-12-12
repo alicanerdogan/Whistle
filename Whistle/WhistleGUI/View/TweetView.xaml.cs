@@ -26,13 +26,15 @@ namespace WhistleGUI.View
         {
             InitializeComponent();
 
-            this.Bind(ViewModel, vm => vm.Content, v => v.TweetContent.Text);
+            this.OneWayBind(ViewModel, vm => vm.ProcessedContent, v => v.TweetContent.RichText);
+            this.Bind(ViewModel, vm => vm.ScreenName, v => v.ScreenName.Text);
             this.Bind(ViewModel, vm => vm.Username, v => v.Username.Text);
             this.Bind(ViewModel, vm => vm.TimeTag, v => v.TimeTag.Text);
             this.Bind(ViewModel, vm => vm.ReplyCount, v => v.ReplyCount.Text);
             this.Bind(ViewModel, vm => vm.LikeCount, v => v.LikeCount.Text);
             this.Bind(ViewModel, vm => vm.RetweetCount, v => v.RetweetCount.Text);
             this.OneWayBind(ViewModel, vm => vm.Avatar, v => v.Avatar.Source);
+            this.Bind(ViewModel, vm => vm.MultiMediaViewModel, v => v.MultiMedia.ViewModel);
         }
 
 
