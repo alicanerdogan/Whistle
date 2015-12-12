@@ -10,8 +10,8 @@ namespace TwitterLibrary
 {
     public class APIManager
     {
-        private const string CONSUMER_KEY = "Ocx6LOTBF1OBwkmFkor1zvHPT";
-        private const string CONSUMER_SECRET = "afpnIjhNja8TtZmRwugX5oaClYD8Y8BDljzA0sPpyQwIGNNrAg";
+        private const string CONSUMER_KEY = "xl16P09KavpHIBq5iZ51r1FYE";
+        private const string CONSUMER_SECRET = "JlFXhvZruwd4mzY8BSai8QGx773YwAZ3BGDFx9m5F3rwihgE0n";
 
         private static APIManager Instance { get; set; }
         public static APIManager GetManager()
@@ -47,34 +47,19 @@ namespace TwitterLibrary
             return true;
         }
 
-        public IEnumerable<Tweet> GetTimelineTweets()
+        public IEnumerable<ITweet> GetTimelineTweets()
         {
-            var tweets = new List<Tweet>();
-            foreach (var twitterStatus in TimelineUpdater.Update())
-            {
-                tweets.Add(new Tweet(twitterStatus));
-            }
-            return tweets;
+            return TweetFactory.CreateTweets(TimelineUpdater.Update());
         }
 
-        public IEnumerable<Tweet> GetTimelineTweetsBefore(long id)
+        public IEnumerable<ITweet> GetTimelineTweetsBefore(long id)
         {
-            var tweets = new List<Tweet>();
-            foreach (var twitterStatus in TimelineUpdater.UpdateBefore(id))
-            {
-                tweets.Add(new Tweet(twitterStatus));
-            }
-            return tweets;
+            return TweetFactory.CreateTweets(TimelineUpdater.UpdateBefore(id));
         }
 
-        public IEnumerable<Tweet> GetTimelineTweetsAfter(long id)
+        public IEnumerable<ITweet> GetTimelineTweetsAfter(long id)
         {
-            var tweets = new List<Tweet>();
-            foreach (var twitterStatus in TimelineUpdater.UpdateAfter(id))
-            {
-                tweets.Add(new Tweet(twitterStatus));
-            }
-            return tweets;
+            return TweetFactory.CreateTweets(TimelineUpdater.UpdateAfter(id));
         }
     }
 }
