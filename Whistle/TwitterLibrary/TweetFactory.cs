@@ -10,7 +10,7 @@ namespace TwitterLibrary
 {
     public static class TweetFactory
     {
-        public static ITweet CreateTweet(TwitterStatus twitterStatus)
+        private static ITweet CreateTweet(TwitterStatus twitterStatus)
         {
             var tweet = new Tweet();
 
@@ -45,7 +45,10 @@ namespace TwitterLibrary
             var tweets = new List<ITweet>();
             foreach (var twitterStatus in twitterStatuses)
             {
-                tweets.Add(CreateTweet(twitterStatus));
+                if (twitterStatus.User != null)
+                {
+                    tweets.Add(CreateTweet(twitterStatus));
+                }
             }
             return tweets;
         }

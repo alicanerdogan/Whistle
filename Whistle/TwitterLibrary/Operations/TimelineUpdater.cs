@@ -23,12 +23,23 @@ namespace TwitterLibrary.Operations
             Options.SinceId = null;
             Options.Count = 30;
 
-            tweets.AddRange(Service.ListTweetsOnHomeTimeline(Options));
+            var currentTweets = Service.ListTweetsOnHomeTimeline(Options);
+            if (currentTweets == null)
+            {
+                throw new Exception("Connection Error!");
+            }
+
+            tweets.AddRange(currentTweets);
+
 
             while (tweets.Count < 30)
             {
                 Options.MaxId = tweets.Last().Id;
                 var olderTweets = Service.ListTweetsOnHomeTimeline(Options);
+                if (olderTweets.ToList().Count == 0)
+                {
+                    break;
+                }
                 tweets.Remove(tweets.Last());
                 tweets.AddRange(olderTweets);
             }
