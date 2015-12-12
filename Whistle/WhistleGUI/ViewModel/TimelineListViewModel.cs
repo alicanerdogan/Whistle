@@ -12,8 +12,8 @@ namespace WhistleGUI.ViewModel
     public class TimelineListViewModel : ReactiveObject, IRoutableViewModel
     {
         #region Commands
-        public ReactiveCommand<IEnumerable<Tweet>> Refresh { get; private set; }
-        public ReactiveCommand<IEnumerable<Tweet>> GetOlderTweets { get; private set; }
+        public ReactiveCommand<IEnumerable<ITweet>> Refresh { get; private set; }
+        public ReactiveCommand<IEnumerable<ITweet>> GetOlderTweets { get; private set; }
         #endregion
 
         #region Properties
@@ -25,7 +25,7 @@ namespace WhistleGUI.ViewModel
             HostScreen = screen;
 
             Tweets = new ReactiveList<TweetViewModel>();
-            Refresh = ReactiveCommand.CreateAsyncTask<IEnumerable<Tweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweets()));
+            Refresh = ReactiveCommand.CreateAsyncTask<IEnumerable<ITweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweets()));
             Refresh.Subscribe(tweets =>
             {
                 foreach (var tweet in tweets)
@@ -35,7 +35,7 @@ namespace WhistleGUI.ViewModel
             });
             Refresh.ThrownExceptions.Subscribe(e => MessageBox.Show(e.Message));
 
-            GetOlderTweets = ReactiveCommand.CreateAsyncTask<IEnumerable<Tweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweetsBefore(Tweets.Last().Tweet.Id)));
+            GetOlderTweets = ReactiveCommand.CreateAsyncTask<IEnumerable<ITweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweetsBefore(Tweets.Last().Tweet.Id)));
             GetOlderTweets.Subscribe(tweets =>
             {
                 foreach (var tweet in tweets)
