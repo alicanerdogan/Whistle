@@ -28,9 +28,12 @@ namespace WhistleGUI
             InitializeComponent();
             Splat.Locator.CurrentMutable.Register(() => new LoginView(), typeof(IViewFor<LoginViewModel>));
             Splat.Locator.CurrentMutable.Register(() => new TimelineListView(), typeof(IViewFor<TimelineListViewModel>));
+            Splat.Locator.CurrentMutable.Register(() => new TweetView(), typeof(IViewFor<TweetViewModel>));
+            Splat.Locator.CurrentMutable.Register(() => new TwitterUserView(), typeof(IViewFor<TwitterUserViewModel>));
 
             ViewModel = new HomeViewModel();
             this.Bind(ViewModel, vm => vm.Router, v => v.ContentView.Router);
+            this.BindCommand(ViewModel, vm => vm.BackToPreviousView, v => v.Back);
         }
 
         private void CloseApp(object sender, MouseButtonEventArgs e)

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:rui="clr-namespace:ReactiveUI;assembly=ReactiveUI"
         xmlns:View="clr-namespace:WhistleGUI.View" x:Class="WhistleGUI.MainWindow"
-        Title="MainWindow" Height="350" Width="435.4"       
+        Title="Whistle" Height="750" Width="500"
         WindowStyle="None"
         AllowsTransparency="True">
     <Grid>
@@ -13,10 +13,13 @@
                 <TextBlock TextAlignment="Center" FontFamily="Segoe UI Light" Foreground="DarkSlateGray">x</TextBlock>
             </Grid>
         </Grid>
-        <rui:RoutedViewHost Margin="10,25,10,0" x:Name="ContentView">
+        <rui:RoutedViewHost Margin="10,25,10,0.4" x:Name="ContentView">
             <rui:RoutedViewHost.DefaultContent>
                 <TextBlock Text="No view loaded."></TextBlock>
             </rui:RoutedViewHost.DefaultContent>
         </rui:RoutedViewHost>
+        <Button x:Name="Back" Background="Transparent" BorderBrush="Transparent" Margin="0,45,15,0" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Top">
+            <Image Source="Resources/back.png" Height="Auto"/>
+        </Button>
     </Grid>
 </Window>

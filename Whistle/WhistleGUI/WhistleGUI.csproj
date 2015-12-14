@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\MultiMediaViewModel.cs" />
     <Compile Include="ViewModel\TimelineListViewModel.cs" />
     <Compile Include="ViewModel\TweetViewModel.cs" />
+    <Compile Include="ViewModel\TwitterUserViewModel.cs" />
     <Compile Include="ViewModel\UserAuthorizationViewModel.cs" />
     <Compile Include="View\BrowserView.xaml.cs">
       <DependentUpon>BrowserView.xaml</DependentUpon>
@@ -113,6 +114,9 @@
     </Compile>
     <Compile Include="View\TweetView.xaml.cs">
       <DependentUpon>TweetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TwitterUserView.xaml.cs">
+      <DependentUpon>TwitterUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserAuthorizationWindow.xaml.cs">
       <DependentUpon>UserAuthorizationWindow.xaml</DependentUpon>
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TweetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TwitterUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,7 +226,9 @@
       <Name>TwitterLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\back.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

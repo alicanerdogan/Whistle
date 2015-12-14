@@ -11,6 +11,9 @@ namespace WhistleGUI.ViewModel
     {
         public RoutingState Router { get; private set; }
         public LoginViewModel LoginViewModel { get; private set; }
+        public TimelineListViewModel TimelineListViewModel { get; private set; }
+
+        public ReactiveCommand<bool> BackToPreviousView { get; private set; }
 
         public HomeViewModel()
         {
@@ -21,12 +24,17 @@ namespace WhistleGUI.ViewModel
                 Where(isLoggedIn => isLoggedIn).
                 Subscribe(_ =>
                 {
-                    var timelineListViewModel = new TimelineListViewModel(this);
-                    Router.Navigate.Execute(timelineListViewModel);
-                    timelineListViewModel.Refresh.Execute(null);
+                    TimelineListViewModel = new TimelineListViewModel(this);
+                    Router.NavigateAndReset.Execute(TimelineListViewModel);
+                    TimelineListViewModel.Refresh.Execute(null);
                 });
 
-            Router.Navigate.Execute(LoginViewModel);
+            var canBackToPreviousView = Router.NavigationStack.WhenAny(stack => stack.Count, count => (count.Value > 1));
+            BackToPreviousView = ReactiveCommand.CreateAsyncTask<bool>(canBackToPreviousView, _ => Task.Run(() => true));
+            BackToPreviousView.SubscribeOn(RxApp.MainThreadScheduler).Subscribe(_ => Router.NavigateBack.Execute(null));
+
+            Router.NavigateAndReset.Execute(LoginViewModel);
+
         }
     }
 }

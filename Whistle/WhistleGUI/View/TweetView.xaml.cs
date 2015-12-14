@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,8 +27,10 @@ namespace WhistleGUI.View
         {
             InitializeComponent();
 
+            Observable.FromEventPattern<MouseButtonEventArgs>(Avatar, nameof(MouseUp)).ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ => this.ViewModel.RouteToUser.Execute(null));
+
             this.OneWayBind(ViewModel, vm => vm.ProcessedContent, v => v.TweetContent.RichText);
-            this.Bind(ViewModel, vm => vm.ScreenName, v => v.ScreenName.Text);
+            this.Bind(ViewModel, vm => vm.DisplayName, v => v.ScreenName.Text);
             this.Bind(ViewModel, vm => vm.Username, v => v.Username.Text);
             this.Bind(ViewModel, vm => vm.TimeTag, v => v.TimeTag.Text);
             this.Bind(ViewModel, vm => vm.ReplyCount, v => v.ReplyCount.Text);

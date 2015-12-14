@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WhistleGUI.View"
              xmlns:custom="clr-namespace:WhistleGUI.CustomControl"
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="300" Background="White" MinHeight="50" MinWidth="300">
+             d:DesignHeight="120" d:DesignWidth="300" MinHeight="50" MinWidth="300">
     <Grid>
         <Image x:Name="Avatar" HorizontalAlignment="Left" Width="50" Source="/WhistleGUI;component/Resources/user.jpg" Margin="5,5,0,0" Height="50" VerticalAlignment="Top"/>
         <StackPanel Margin="60,5,0,0" Orientation="Horizontal">

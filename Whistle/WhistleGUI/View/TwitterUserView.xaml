@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WhistleGUI.View.TwitterUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WhistleGUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Background="White">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+            <TextBlock x:Name="DisplayName" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" FontSize="26.667" Height="Auto">
+            ae
+            </TextBlock>
+            <TextBlock x:Name="Username" Margin="10,0,0,0" Foreground="DarkGray" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" FontSize="22" Height="Auto">
+            @aeality
+            </TextBlock>
+        </StackPanel>
+        <Image x:Name="Avatar" Margin="0,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="100" Source="/WhistleGUI;component/Resources/user.jpg" />
+    </Grid>
+</UserControl>

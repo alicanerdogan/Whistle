@@ -26,24 +26,20 @@ namespace WhistleGUI.ViewModel
 
             Tweets = new ReactiveList<TweetViewModel>();
             Refresh = ReactiveCommand.CreateAsyncTask<IEnumerable<ITweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweets()));
-            Refresh.Subscribe(tweets =>
-            {
-                foreach (var tweet in tweets)
-                {
-                    Tweets.Add(new TweetViewModel(tweet));
-                }
-            });
+            Refresh.Subscribe(tweets => CreateTweetViews(tweets));
             Refresh.ThrownExceptions.Subscribe(e => MessageBox.Show(e.Message));
 
             GetOlderTweets = ReactiveCommand.CreateAsyncTask<IEnumerable<ITweet>>(_ => Task.Run(() => APIManager.GetManager().GetTimelineTweetsBefore(Tweets.Last().Tweet.Id)));
-            GetOlderTweets.Subscribe(tweets =>
-            {
-                foreach (var tweet in tweets)
-                {
-                    Tweets.Add(new TweetViewModel(tweet));
-                }
-            });
+            GetOlderTweets.Subscribe(tweets => CreateTweetViews(tweets));
             GetOlderTweets.ThrownExceptions.Subscribe(e => MessageBox.Show(e.Message));
+        }
+
+        private void CreateTweetViews(IEnumerable<ITweet> tweets)
+        {
+            foreach (var tweet in tweets)
+            {
+                Tweets.Add(new TweetViewModel(HostScreen, tweet));
+            }
         }
 
         #region IRoutableView Extension
