@@ -16,16 +16,16 @@ namespace TwitterLibrary
         public int FollowingCount { get; private set; }
         public bool? IsProtected { get; private set; }
         public bool? IsVerified { get; private set; }
-        public string Name { get; private set; }
-        public string ScreenName { get; private set; }
+        public string Username { get; private set; }
+        public string DisplayName { get; private set; }
         public int TweetCount { get; private set; }
         public long Id { get; private set; }
 
         public TwitterUser(TweetSharp.TwitterUser user)
         {
             Id = user.Id;
-            Name = user.Name;
-            ScreenName = user.ScreenName;
+            Username = user.ScreenName;
+            DisplayName = user.Name;
             Description = user.Description;
             AvatarURL = user.ProfileImageUrl;
             BackgroundURL = user.ProfileBackgroundImageUrl;
