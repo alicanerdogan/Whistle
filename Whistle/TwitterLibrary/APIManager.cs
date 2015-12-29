@@ -49,17 +49,23 @@ namespace TwitterLibrary
 
         public IEnumerable<ITweet> GetTimelineTweets()
         {
-            return TweetFactory.CreateTweets(TimelineUpdater.Update());
+            return TweetFactory.CreateTweets(TimelineUpdater.GetLatest());
         }
 
         public IEnumerable<ITweet> GetTimelineTweetsBefore(long id)
         {
-            return TweetFactory.CreateTweets(TimelineUpdater.UpdateBefore(id));
+            return TweetFactory.CreateTweets(TimelineUpdater.GetBefore(id));
         }
 
         public IEnumerable<ITweet> GetTimelineTweetsAfter(long id)
         {
-            return TweetFactory.CreateTweets(TimelineUpdater.UpdateAfter(id));
+            return TweetFactory.CreateTweets(TimelineUpdater.GetAfter(id));
+        }
+
+        public IEnumerable<ITweet> GetUserTweets(long userId)
+        {
+            ITweetGetter tweetGetter = new UserTweetsGetter(Service, userId);
+            return TweetFactory.CreateTweets(tweetGetter.GetLatest());
         }
     }
 }

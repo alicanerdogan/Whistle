@@ -63,6 +63,8 @@
     <Compile Include="Operations\Authenticator.cs" />
     <Compile Include="Operations\Authorizer.cs" />
     <Compile Include="Operations\TimelineUpdater.cs" />
+    <Compile Include="Operations\TweetGetter.cs" />
+    <Compile Include="Operations\UserTweetsGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TweetFactory.cs" />

@@ -30,6 +30,7 @@ namespace TwitterLibrary
             tweet.Content = twitterStatus.Text;
             tweet.RawContent = twitterStatus.TextAsHtml;
             tweet.RetweetCount = twitterStatus.RetweetCount;
+            tweet.LikeCount = twitterStatus.FavoriteCount;
             tweet.ReplyCount = 0;
 
             twitterStatus.Entities.Media.ToList().ForEach(m => tweet.AddMedia(new Media(m)));

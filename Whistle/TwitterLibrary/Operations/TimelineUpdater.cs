@@ -7,23 +7,17 @@ using TweetSharp;
 
 namespace TwitterLibrary.Operations
 {
-    public class TimelineUpdater : APIOperation
+    public class TimelineUpdater : TweetGetter<ListTweetsOnHomeTimelineOptions>
     {
-        private ListTweetsOnHomeTimelineOptions Options { get; set; }
-
         public TimelineUpdater(TwitterService service) : base(service)
         {
-            Options = new ListTweetsOnHomeTimelineOptions() { ExcludeReplies = false };
         }
 
-        public IEnumerable<TwitterStatus> Update()
+        protected override IEnumerable<TwitterStatus> GetLatestTemplate(ListTweetsOnHomeTimelineOptions options)
         {
             List<TwitterStatus> tweets = new List<TwitterStatus>();
-            Options.MaxId = null;
-            Options.SinceId = null;
-            Options.Count = 30;
 
-            var currentTweets = Service.ListTweetsOnHomeTimeline(Options);
+            var currentTweets = Service.ListTweetsOnHomeTimeline(options);
             if (currentTweets == null)
             {
                 throw new Exception("Connection Error!");
@@ -34,9 +28,9 @@ namespace TwitterLibrary.Operations
 
             while (tweets.Count < 30)
             {
-                Options.MaxId = tweets.Last().Id;
-                var olderTweets = Service.ListTweetsOnHomeTimeline(Options);
-                if (olderTweets.ToList().Count == 0)
+                options.MaxId = tweets.Last().Id;
+                var olderTweets = Service.ListTweetsOnHomeTimeline(options);
+                if (olderTweets?.ToList().Count == 0)
                 {
                     break;
                 }
@@ -47,14 +41,10 @@ namespace TwitterLibrary.Operations
             return tweets;
         }
 
-        public IEnumerable<TwitterStatus> UpdateBefore(long id)
+        protected override IEnumerable<TwitterStatus> GetBeforeTemplate(ListTweetsOnHomeTimelineOptions options)
         {
-            Options.MaxId = id;
-            Options.SinceId = null;
-            Options.Count = 30;
-
             List<TwitterStatus> tweets = new List<TwitterStatus>();
-            tweets.AddRange(Service.ListTweetsOnHomeTimeline(Options));
+            tweets.AddRange(Service.ListTweetsOnHomeTimeline(options));
             if (tweets.Count > 0)
             {
                 tweets.RemoveAt(0);
@@ -62,19 +52,42 @@ namespace TwitterLibrary.Operations
             return tweets;
         }
 
-        public IEnumerable<TwitterStatus> UpdateAfter(long id)
+        protected override IEnumerable<TwitterStatus> GetAfterTemplate(ListTweetsOnHomeTimelineOptions options)
         {
-            Options.MaxId = null;
-            Options.SinceId = id;
-            Options.Count = null;
-
             List<TwitterStatus> tweets = new List<TwitterStatus>();
-            tweets.AddRange(Service.ListTweetsOnHomeTimeline(Options));
+            tweets.AddRange(Service.ListTweetsOnHomeTimeline(options));
             if (tweets.Count > 0)
             {
                 tweets.Remove(tweets.Last());
             }
             return tweets;
+        }
+
+        protected override ListTweetsOnHomeTimelineOptions GetOptionsToGetLatest()
+        {
+            var options = new ListTweetsOnHomeTimelineOptions() { ExcludeReplies = false };
+            options.MaxId = null;
+            options.SinceId = null;
+            options.Count = 30;
+            return options;
+        }
+
+        protected override ListTweetsOnHomeTimelineOptions GetOptionsToGetBefore(long id)
+        {
+            var options = new ListTweetsOnHomeTimelineOptions() { ExcludeReplies = false };
+            options.MaxId = id;
+            options.SinceId = null;
+            options.Count = 30;
+            return options;
+        }
+
+        protected override ListTweetsOnHomeTimelineOptions GetOptionsToGetAfter(long id)
+        {
+            var options = new ListTweetsOnHomeTimelineOptions() { ExcludeReplies = false };
+            options.MaxId = null;
+            options.SinceId = id;
+            options.Count = null;
+            return options;
         }
     }
 }
