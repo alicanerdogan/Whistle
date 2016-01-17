@@ -7,7 +7,7 @@ using TweetSharp;
 
 namespace TwitterLibrary.Entity
 {
-    public class Media : URL
+    public class Media : URL, IMedia
     {
         public enum TwitterMediaType
         {
@@ -15,10 +15,12 @@ namespace TwitterLibrary.Entity
         }
 
         public TwitterMediaType MediaType { get; set; }
+        public long Id { get; set; }
 
         public Media(TwitterMedia media) : base(media.MediaUrl, "http://" + media.DisplayUrl, media.Url)
         {
             MediaType = TwitterMediaType.Photo;
+            Id = media.Id;
         }
     }
 }
